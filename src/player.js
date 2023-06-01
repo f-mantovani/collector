@@ -14,4 +14,19 @@ export class Player extends Base {
         if (this.keysPressed.left && this.x > 0)
             this.move('left');
     }
+    changeColor() {
+        console.log('inside change color');
+        switch (this.color) {
+            case 'Green':
+                this.color = 'Purple';
+                break;
+            case 'Purple':
+                this.color = 'Red';
+                break;
+            case 'Red':
+                this.color = 'Green';
+                break;
+        }
+        this.domElement.style.backgroundColor = this.color;
+    }
 }

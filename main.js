@@ -64,7 +64,7 @@ class Game {
                     this.restart();
                     break;
                 case 'Space':
-                    console.log('space');
+                    this.player.changeColor();
                     break;
             }
         });
