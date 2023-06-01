@@ -1,6 +1,6 @@
 import { Player, PlayerInfo } from './src/player.js'
 import { Obstacle, ObstacleInfo } from './src/obstacle.js'
-import { Base, BaseInfo } from './src/base.js'
+import { BaseInfo } from './src/base.js'
 import { ExtractTypes } from './src/types/types.js'
 
 class Game {

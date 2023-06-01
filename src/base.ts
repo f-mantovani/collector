@@ -23,8 +23,8 @@ export class Base {
     this.type = type
     this.keepOnScreen = true
     this.speed = speed
-    const randomColor = Math.random()
-    this.color = randomColor <= 0.2  ? 'Red' : randomColor >= 0.5 ? 'Green' : 'Purple'
+    const randomColor = Math.round(Math.random() * 3) + 1
+    this.color = randomColor === 1 ? 'Red' : randomColor === 2 ? 'Green' : 'Purple'
     this.domElement = this.createDomElement()
   }
   
