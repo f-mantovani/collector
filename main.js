@@ -20,6 +20,7 @@ class Game {
             this.player.movePlayer();
             this.obstacleController();
             this.updateScore();
+            this.gameOver();
         }, 20);
     }
     pauseGame() {
@@ -43,6 +44,11 @@ class Game {
         this.score = 0;
         this.intervalId = null;
         this.start();
+    }
+    gameOver() {
+        if (this.score < 0) {
+            clearInterval(this.intervalId);
+        }
     }
     updateScore() {
         const scoreElement = document.querySelector('#score');
@@ -117,7 +123,7 @@ class Game {
         }
     }
     obstacleController() {
-        if (this.time % 100 === 0) {
+        if (this.time % 90 === 0) {
             this.obstacles.push(new Obstacle());
         }
         this.obstacles = this.obstacles.filter(obstacle => obstacle.keepOnScreen);
@@ -126,12 +132,16 @@ class Game {
             const isOutside = Boolean(obstacle.y < 0 - obstacle.height);
             if (isOutside) {
                 obstacle.remove();
+                this.score -= 5;
             }
             const hasColided = this.collisionDetection(obstacle, this.player);
             if (hasColided) {
                 obstacle.remove();
                 if (this.player.color === obstacle.color) {
-                    this.score += 1;
+                    this.score += 10;
+                }
+                else {
+                    this.score = -1;
                 }
             }
         });
