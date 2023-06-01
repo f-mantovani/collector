@@ -3,6 +3,7 @@ import { Obstacle, ObstacleInfo } from './src/obstacle.js'
 import { Base, BaseInfo } from './src/base.js'
 import { ExtractTypes } from './src/types/types.js'
 
+
 class Game {
 	player: PlayerInfo | null
 	obstacles: ObstacleInfo[]
@@ -61,6 +62,8 @@ class Game {
 	gameOver() {
 		if (this.score < 0) {
 			clearInterval(this.intervalId!)
+			const restartParent = restartBtn!.parentElement
+			restartParent!.style.display = 'flex'
 		}
 	}
 
@@ -80,9 +83,6 @@ class Game {
 			switch (event.code) {
 				case 'KeyX':
 					this.pauseGame()
-					break
-				case 'KeyN':
-					this.restart()
 					break
 				case 'Space':
 					this.player!.changeColor()
@@ -175,4 +175,11 @@ startBtn?.addEventListener('click', () => {
 	game.start()
 	const instructions = startBtn.parentElement
 	instructions!.style.display = 'none'
+})
+
+const restartBtn = document.querySelector('.restart button')
+restartBtn?.addEventListener('click', () => {
+	game.restart()
+	const restartParent = restartBtn!.parentElement
+	restartParent!.style.display = 'none'
 })

@@ -48,6 +48,8 @@ class Game {
     gameOver() {
         if (this.score < 0) {
             clearInterval(this.intervalId);
+            const restartParent = restartBtn.parentElement;
+            restartParent.style.display = 'flex';
         }
     }
     updateScore() {
@@ -65,9 +67,6 @@ class Game {
             switch (event.code) {
                 case 'KeyX':
                     this.pauseGame();
-                    break;
-                case 'KeyN':
-                    this.restart();
                     break;
                 case 'Space':
                     this.player.changeColor();
@@ -153,4 +152,10 @@ startBtn === null || startBtn === void 0 ? void 0 : startBtn.addEventListener('c
     game.start();
     const instructions = startBtn.parentElement;
     instructions.style.display = 'none';
+});
+const restartBtn = document.querySelector('.restart button');
+restartBtn === null || restartBtn === void 0 ? void 0 : restartBtn.addEventListener('click', () => {
+    game.restart();
+    const restartParent = restartBtn.parentElement;
+    restartParent.style.display = 'none';
 });

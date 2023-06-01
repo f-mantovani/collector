@@ -30,7 +30,7 @@ html::-webkit-scrollbar {
 	position: absolute;
 }
 
-.instructions {
+.instructions, .restart {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -76,12 +76,16 @@ html::-webkit-scrollbar {
   text-align: center;
 }
 
-.start {
+.btn {
   all: unset;
   padding: .75em 1em;
   border-radius: 8px;
   background-color: black;
   color: whitesmoke
+}
+
+.restart {
+  display: none
 }
 
 
