@@ -14,6 +14,7 @@ html::-webkit-scrollbar {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+  font-size: 1.25rem;
 }
 
 #score {
@@ -34,7 +35,7 @@ html::-webkit-scrollbar {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-  background-color: rgba(240, 255, 255, 0.5);
+  background-color: rgba(226, 241, 241, 0.721);
   padding: 2em 1em;
   min-height: 50%;
   width: 70%;
@@ -43,7 +44,7 @@ html::-webkit-scrollbar {
   justify-content: space-around;
   align-items: center;
   border: 1px solid rgba(240, 255, 255);
-  color: #412323;
+  color: #281818;
   border-radius: 8px
 }
 
