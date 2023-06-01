@@ -30,7 +30,8 @@ html::-webkit-scrollbar {
 	position: absolute;
 }
 
-.instructions, .restart {
+.instructions, 
+.restart {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -46,6 +47,11 @@ html::-webkit-scrollbar {
   border: 1px solid rgba(240, 255, 255);
   color: #281818;
   border-radius: 8px
+}
+
+hr {
+  width: 75%;
+  background-color: black;
 }
 
 ul {
@@ -90,6 +96,10 @@ ul {
   border-radius: 8px;
   background-color: black;
   color: whitesmoke
+}
+
+.start {
+  margin-top: 1rem;
 }
 
 .restart {
