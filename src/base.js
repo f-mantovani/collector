@@ -7,6 +7,8 @@ export class Base {
         this.type = type;
         this.keepOnScreen = true;
         this.speed = speed;
+        const randomColor = Math.random();
+        this.color = randomColor <= 0.2 ? 'Red' : randomColor >= 0.5 ? 'Green' : 'Purple';
         this.domElement = this.createDomElement();
     }
     createDomElement() {
@@ -16,6 +18,7 @@ export class Base {
         domElement.style.left = this.x + 'vw';
         domElement.style.height = this.height + 'vh';
         domElement.style.width = this.width + 'vw';
+        domElement.style.backgroundColor = this.color;
         const parentElement = document.getElementById('board');
         parentElement === null || parentElement === void 0 ? void 0 : parentElement.appendChild(domElement);
         return domElement;

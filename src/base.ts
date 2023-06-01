@@ -13,6 +13,7 @@ export class Base {
   type: string
   keepOnScreen: boolean
   speed: number
+  color: 'Red' | 'Green' | 'Purple'
 
   constructor ({ x, y, width, height, speed, type }: BaseTyping) {
     this.width = width
@@ -22,18 +23,20 @@ export class Base {
     this.type = type
     this.keepOnScreen = true
     this.speed = speed
-
+    const randomColor = Math.random()
+    this.color = randomColor <= 0.2  ? 'Red' : randomColor >= 0.5 ? 'Green' : 'Purple'
     this.domElement = this.createDomElement()
   }
-
+  
   createDomElement (): HTMLDivElement {
     const domElement = document.createElement('div')
     domElement.classList.add(this.type)
-
+    
     domElement.style.bottom = this.y + 'vh'
     domElement.style.left = this.x + 'vw'
     domElement.style.height = this.height + 'vh'
     domElement.style.width = this.width + 'vw'
+    domElement.style.backgroundColor = this.color
 
     const parentElement = document.getElementById('board')
     parentElement?.appendChild(domElement)

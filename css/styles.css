@@ -15,6 +15,10 @@ html::-webkit-scrollbar {
   padding: 0;
   overflow: hidden;
 }
+#score {
+  color: #efe9e9;
+  margin: 1rem 1rem;
+}
 
 .player {
   background-color: burlywood;

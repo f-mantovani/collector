@@ -23,25 +23,102 @@ class Game {
 
 	start() {
 		this.player = new Player()
-		this.startInterval()
+		this.gameInterval()
 	}
 
-	startInterval() {
+	gameInterval() {
 		this.intervalId = setInterval(() => {
 			this.time += 1
-			this.player && this.player.movePlayer()
+			this.player!.movePlayer()
 			this.obstacleController()
+			this.updateScore()
 		}, 20)
 	}
 
 	pauseGame() {
 		if (this.isPaused) {
-			this.startInterval()
+			this.gameInterval()
 			this.isPaused = !this.isPaused
 		} else {
-			this.intervalId && clearInterval(this.intervalId)
+			clearInterval(this.intervalId!)
 			this.isPaused = !this.isPaused
 		}
+	}
+
+	restart() {
+		clearInterval(this.intervalId!)
+		this.player?.domElement.remove()
+		this.obstacles.forEach(obstacle => obstacle.domElement.remove())
+		this.player = null
+		this.obstacles = []
+		this.time = 0
+		this.score = 0
+		this.intervalId = null
+		this.start()
+	}
+
+	updateScore() {
+		const scoreElement = document.querySelector('#score')
+		if (scoreElement) {
+			scoreElement.innerHTML = `
+				<div id="score">
+				Score:
+				<span>${this.score}</span>
+			`
+		}
+	}
+
+	attachListeners() {
+		document.addEventListener('keydown', (event: KeyboardEvent) => {
+			switch (event.code) {
+				case 'KeyX':
+					this.pauseGame()
+					break
+				case 'KeyN':
+					this.restart()
+					break
+				case 'Space':
+					console.log('space')
+					break
+			}
+		})
+
+		/* eslint-disable-line */ const keydownListener = (event: KeyboardEvent) => {
+			switch (event.code) {
+				case 'ArrowUp':
+					this.player!.keysPressed.up = true
+					break
+				case 'ArrowDown':
+					this.player!.keysPressed.down = true
+					break
+				case 'ArrowRight':
+					this.player!.keysPressed.right = true
+					break
+				case 'ArrowLeft':
+					this.player!.keysPressed.left = true
+					break
+			}
+		}
+
+		const keyupListener = (event: KeyboardEvent) => {
+			switch (event.code) {
+				case 'ArrowUp':
+					this.player!.keysPressed.up = false
+					break
+				case 'ArrowDown':
+					this.player!.keysPressed.down = false
+					break
+				case 'ArrowRight':
+					this.player!.keysPressed.right = false
+					break
+				case 'ArrowLeft':
+					this.player!.keysPressed.left = false
+					break
+			}
+		}
+
+		document.addEventListener('keydown', keydownListener)
+		document.addEventListener('keyup', keyupListener)
 	}
 
 	collisionDetection(firstInstance: BaseInfo, secondInstance: BaseInfo) {
@@ -70,95 +147,13 @@ class Game {
 			if (isOutside) {
 				obstacle.remove()
 			}
-			let hasColided
-			if (this.player) {
-				hasColided = this.collisionDetection(obstacle, this.player)
-			}
+			const hasColided =  this.collisionDetection(obstacle, this.player!)
 			if (hasColided) {
 				obstacle.remove()
+				this.score += 1
+				this.player!.width
 			}
 		})
-	}
-
-	restart() {
-		this.intervalId && clearInterval(this.intervalId)
-		this.player?.domElement.remove()
-		this.obstacles.forEach(obstacle => obstacle.domElement.remove())
-		this.player = null
-		this.obstacles = []
-		this.time = 0
-		this.score = 0
-		this.intervalId = null
-		this.start()
-	}
-
-	attachListeners() {
-		document.addEventListener('keydown', (event: KeyboardEvent) => {
-			switch (event.code) {
-				case 'KeyX':
-					this.pauseGame()
-					break
-				case 'KeyN':
-					this.restart()
-					break
-				case 'Space':
-					console.log('space')
-					break
-			}
-		})
-
-		/* eslint-disable-line */ const keydownListener = (event: KeyboardEvent) => {
-			switch (event.code) {
-				case 'ArrowUp':
-					if (this.player) {
-						this.player.keysPressed.up = true
-					}
-					break
-				case 'ArrowDown':
-					if (this.player) {
-						this.player.keysPressed.down = true
-					}
-					break
-				case 'ArrowRight':
-					if (this.player) {
-						this.player.keysPressed.right = true
-					}
-					break
-				case 'ArrowLeft':
-					if (this.player) {
-						this.player.keysPressed.left = true
-					}
-					break
-			}
-		}
-
-		const keyupListener = (event: KeyboardEvent) => {
-			switch (event.code) {
-				case 'ArrowUp':
-					if (this.player) {
-						this.player.keysPressed.up = false
-					}
-					break
-				case 'ArrowDown':
-					if (this.player) {
-						this.player.keysPressed.down = false
-					}
-					break
-				case 'ArrowRight':
-					if (this.player) {
-						this.player.keysPressed.right = false
-					}
-					break
-				case 'ArrowLeft':
-					if (this.player) {
-						this.player.keysPressed.left = false
-					}
-					break
-			}
-		}
-
-		document.addEventListener('keydown', keydownListener)
-		document.addEventListener('keyup', keyupListener)
 	}
 }
 

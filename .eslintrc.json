@@ -35,6 +35,7 @@
             "error",
             "never"
         ],
-        "camelcase": "error"
+        "camelcase": "error",
+        "@typescript-eslint/no-non-null-assertion": "off"
     }
 }
