@@ -130,8 +130,9 @@ class Game {
             const hasColided = this.collisionDetection(obstacle, this.player);
             if (hasColided) {
                 obstacle.remove();
-                this.score += 1;
-                this.player.width;
+                if (this.player.color === obstacle.color) {
+                    this.score += 1;
+                }
             }
         });
     }

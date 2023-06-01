@@ -147,11 +147,12 @@ class Game {
 			if (isOutside) {
 				obstacle.remove()
 			}
-			const hasColided =  this.collisionDetection(obstacle, this.player!)
+			const hasColided = this.collisionDetection(obstacle, this.player!)
 			if (hasColided) {
 				obstacle.remove()
-				this.score += 1
-				this.player!.width
+				if (this.player!.color === obstacle.color) {
+					this.score += 1
+				}
 			}
 		})
 	}
