@@ -3,12 +3,12 @@ import { Obstacle, ObstacleInfo } from './src/obstacle.js'
 import { Base, BaseInfo } from './src/base.js'
 import { ExtractTypes } from './src/types/types.js'
 
-
 class Game {
 	player: PlayerInfo | null
 	obstacles: ObstacleInfo[]
 	time: number
 	score: number
+	fps: number
 	isPaused: boolean
 	intervalId: ReturnType<typeof setInterval> | null
 
@@ -19,6 +19,7 @@ class Game {
 		this.score = 0
 		this.isPaused = false
 		this.intervalId = null
+		this.fps = 35
 		this.attachListeners()
 	}
 
@@ -33,7 +34,9 @@ class Game {
 			this.player!.movePlayer()
 			this.obstacleController()
 			this.updateScore()
-			this.gameOver()
+			if (this.score < 0) {
+				this.gameOver()
+			}
 		}, 20)
 	}
 
@@ -60,10 +63,22 @@ class Game {
 	}
 
 	gameOver() {
-		if (this.score < 0) {
-			clearInterval(this.intervalId!)
-			const restartParent = restartBtn!.parentElement
-			restartParent!.style.display = 'flex'
+		const highScore = Number(localStorage.getItem('highScore')) || 0
+		const highest = Math.max(highScore, this.score)
+		localStorage.setItem('highScore', String(highest))
+
+		clearInterval(this.intervalId!)
+		restartParent!.style.display = 'flex'
+		const scoring = document.getElementById('scoring')
+		if (scoring) {
+			scoring.style.display = 'flex'
+			scoring.style.flexDirection = 'column'
+			scoring.style.alignItems = 'center'
+			scoring.innerHTML = `
+			<p> Your highest score is: <p>
+			<p> ${highest} <p>
+			`
+			restartParent?.insertBefore(scoring, restartBtn)
 		}
 	}
 
@@ -161,7 +176,7 @@ class Game {
 				if (this.player!.color === obstacle.color) {
 					this.score += 10
 				} else {
-					this.score = -1
+					this.gameOver()
 				}
 			}
 		})
@@ -178,8 +193,8 @@ startBtn?.addEventListener('click', () => {
 })
 
 const restartBtn = document.querySelector('.restart button')
+const restartParent = restartBtn!.parentElement
 restartBtn?.addEventListener('click', () => {
 	game.restart()
-	const restartParent = restartBtn!.parentElement
 	restartParent!.style.display = 'none'
 })

@@ -22,7 +22,6 @@ html::-webkit-scrollbar {
 }
 
 .player {
-	background-color: burlywood;
 	position: absolute;
 }
 
@@ -47,6 +46,14 @@ html::-webkit-scrollbar {
   color: #412323;
   border-radius: 8px
 }
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
 .color {
   display: flex;
   flex-direction: row;

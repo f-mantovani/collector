@@ -15,7 +15,6 @@ export class Player extends Base {
             this.move('left');
     }
     changeColor() {
-        console.log('inside change color');
         switch (this.color) {
             case 'Green':
                 this.color = 'Purple';

@@ -8,6 +8,7 @@ class Game {
         this.score = 0;
         this.isPaused = false;
         this.intervalId = null;
+        this.fps = 35;
         this.attachListeners();
     }
     start() {
@@ -20,7 +21,9 @@ class Game {
             this.player.movePlayer();
             this.obstacleController();
             this.updateScore();
-            this.gameOver();
+            if (this.score < 0) {
+                this.gameOver();
+            }
         }, 20);
     }
     pauseGame() {
@@ -46,10 +49,21 @@ class Game {
         this.start();
     }
     gameOver() {
-        if (this.score < 0) {
-            clearInterval(this.intervalId);
-            const restartParent = restartBtn.parentElement;
-            restartParent.style.display = 'flex';
+        const highScore = Number(localStorage.getItem('highScore')) || 0;
+        const highest = Math.max(highScore, this.score);
+        localStorage.setItem('highScore', String(highest));
+        clearInterval(this.intervalId);
+        restartParent.style.display = 'flex';
+        const scoring = document.getElementById('scoring');
+        if (scoring) {
+            scoring.style.display = 'flex';
+            scoring.style.flexDirection = 'column';
+            scoring.style.alignItems = 'center';
+            scoring.innerHTML = `
+			<p> Your highest score is: <p>
+			<p> ${highest} <p>
+			`;
+            restartParent === null || restartParent === void 0 ? void 0 : restartParent.insertBefore(scoring, restartBtn);
         }
     }
     updateScore() {
@@ -140,7 +154,7 @@ class Game {
                     this.score += 10;
                 }
                 else {
-                    this.score = -1;
+                    this.gameOver();
                 }
             }
         });
@@ -154,8 +168,8 @@ startBtn === null || startBtn === void 0 ? void 0 : startBtn.addEventListener('c
     instructions.style.display = 'none';
 });
 const restartBtn = document.querySelector('.restart button');
+const restartParent = restartBtn.parentElement;
 restartBtn === null || restartBtn === void 0 ? void 0 : restartBtn.addEventListener('click', () => {
     game.restart();
-    const restartParent = restartBtn.parentElement;
     restartParent.style.display = 'none';
 });
