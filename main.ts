@@ -1,13 +1,11 @@
 import { Player, PlayerInfo } from './src/player.js'
 import { Obstacle, ObstacleInfo } from './src/obstacle.js'
-import { Bullet, BulletInfo } from './src/bullet.js'
 import { Base, BaseInfo } from './src/base.js'
 import { ExtractTypes } from './src/types/types.js'
 
 class Game {
 	player: PlayerInfo | null
 	obstacles: ObstacleInfo[]
-	bullets: BulletInfo[]
 	time: number
 	score: number
 	isPaused: boolean
@@ -16,7 +14,6 @@ class Game {
 	constructor() {
 		this.player = null
 		this.obstacles = []
-		this.bullets = []
 		this.time = 0
 		this.score = 0
 		this.isPaused = false
@@ -89,8 +86,6 @@ class Game {
 		this.obstacles.forEach(obstacle => obstacle.domElement.remove())
 		this.player = null
 		this.obstacles = []
-
-		this.bullets = []
 		this.time = 0
 		this.score = 0
 		this.intervalId = null
@@ -106,53 +101,66 @@ class Game {
 				case 'KeyN':
 					this.restart()
 					break
+				case 'Space':
+					console.log('space')
+					break
 			}
 		})
 
-		const keydownListener /* eslint-disable-line */ = (event: KeyboardEvent) => {
-			if (this.player) {
-				switch (event.code) {
-					case 'ArrowUp':
+		/* eslint-disable-line */ const keydownListener = (event: KeyboardEvent) => {
+			switch (event.code) {
+				case 'ArrowUp':
+					if (this.player) {
 						this.player.keysPressed.up = true
-						break
-					case 'ArrowDown':
-						this.player.keysPressed.down = true
-						break
-					case 'ArrowRight':
-						this.player.keysPressed.right = true
-						break
-					case 'ArrowLeft':
-						this.player.keysPressed.left = true
-						break
-					case 'Space':
-						console.log('space')
-						break
-				}
-			}
-
-			const keyupListener = (event: KeyboardEvent) => {
-				if (this.player) {
-					switch (event.code) {
-						case 'ArrowUp':
-							this.player.keysPressed.up = false
-							break
-						case 'ArrowDown':
-							this.player.keysPressed.down = false
-							break
-						case 'ArrowRight':
-							this.player.keysPressed.right = false
-							break
-						case 'ArrowLeft':
-							this.player.keysPressed.left = false
-							break
 					}
-				}
+					break
+				case 'ArrowDown':
+					if (this.player) {
+						this.player.keysPressed.down = true
+					}
+					break
+				case 'ArrowRight':
+					if (this.player) {
+						this.player.keysPressed.right = true
+					}
+					break
+				case 'ArrowLeft':
+					if (this.player) {
+						this.player.keysPressed.left = true
+					}
+					break
 			}
-
-			document.addEventListener('keydown', keydownListener)
-			document.addEventListener('keyup', keyupListener)
 		}
+
+		const keyupListener = (event: KeyboardEvent) => {
+			switch (event.code) {
+				case 'ArrowUp':
+					if (this.player) {
+						this.player.keysPressed.up = false
+					}
+					break
+				case 'ArrowDown':
+					if (this.player) {
+						this.player.keysPressed.down = false
+					}
+					break
+				case 'ArrowRight':
+					if (this.player) {
+						this.player.keysPressed.right = false
+					}
+					break
+				case 'ArrowLeft':
+					if (this.player) {
+						this.player.keysPressed.left = false
+					}
+					break
+			}
+		}
+
+		document.addEventListener('keydown', keydownListener)
+		document.addEventListener('keyup', keyupListener)
 	}
 }
+
 const game: ExtractTypes<Game> = new Game()
 game.start()

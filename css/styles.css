@@ -22,6 +22,5 @@ html::-webkit-scrollbar {
 }
 
 .obstacle {
-  background-color: aquamarine;
   position: absolute;
 }
