@@ -1,30 +1,87 @@
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 html::-webkit-scrollbar {
-  display: none
+	display: none;
 }
 
 #board {
-  background-color: #232323;
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+	background-color: #232323;
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 }
+
 #score {
-  color: #efe9e9;
-  margin: 1rem 1rem;
+	color: #efe9e9;
+	margin: 1rem 1rem;
 }
 
 .player {
-  background-color: burlywood;
-  position: absolute;
+	background-color: burlywood;
+	position: absolute;
 }
 
 .obstacle {
-  position: absolute;
+	position: absolute;
 }
+
+.instructions {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+  background-color: rgba(240, 255, 255, 0.5);
+  padding: 2em 1em;
+  min-height: 50%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid rgba(240, 255, 255);
+  color: #412323;
+  border-radius: 8px
+}
+.color {
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+  align-items: center
+}
+
+.square {
+  width: 20px;
+  height: 20px;
+  
+}
+
+.red {
+  background-color: red
+}
+
+.purple {
+  background-color: purple
+}
+
+.green {
+  background-color: green
+}
+
+.instructions p {
+  text-align: center;
+}
+
+.start {
+  all: unset;
+  padding: .75em 1em;
+  border-radius: 8px;
+  background-color: black;
+  color: whitesmoke
+}
+
+

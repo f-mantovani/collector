@@ -90,7 +90,7 @@ class Game {
 			}
 		})
 
-		/* eslint-disable-line */ const keydownListener = (event: KeyboardEvent) => {
+		const keydownListener = (event: KeyboardEvent) => {
 			switch (event.code) {
 				case 'ArrowUp':
 					this.player!.keysPressed.up = true
@@ -169,4 +169,10 @@ class Game {
 }
 
 const game: ExtractTypes<Game> = new Game()
-game.start()
+
+const startBtn = document.querySelector('.start')
+startBtn?.addEventListener('click', () => {
+	game.start()
+	const instructions = startBtn.parentElement
+	instructions!.style.display = 'none'
+})

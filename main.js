@@ -74,7 +74,7 @@ class Game {
                     break;
             }
         });
-        /* eslint-disable-line */ const keydownListener = (event) => {
+        const keydownListener = (event) => {
             switch (event.code) {
                 case 'ArrowUp':
                     this.player.keysPressed.up = true;
@@ -148,4 +148,9 @@ class Game {
     }
 }
 const game = new Game();
-game.start();
+const startBtn = document.querySelector('.start');
+startBtn === null || startBtn === void 0 ? void 0 : startBtn.addEventListener('click', () => {
+    game.start();
+    const instructions = startBtn.parentElement;
+    instructions.style.display = 'none';
+});
